@@ -1,0 +1,10 @@
+{
+    "GOOGLE_CLIENT_ID": "797777669990-3nrqege9htfihuo5e520psssk39ipanb.apps.googleusercontent.com",
+    "PORT": "3000",
+    "BACKEND_BASE_URL": "http://localhost:3000",
+    "FRONTEND_BASE_URL": "/",
+    "MYSQL_USER": "root",
+    "MYSQL_PASSWORD": "",
+    "MYSQL_DATABASE": "ticketdb",
+    "WEB_ROOT": "C://xampp/htdocs"
+}

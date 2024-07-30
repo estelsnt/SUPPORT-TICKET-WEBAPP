@@ -15,12 +15,16 @@ function Landing() {
 
     return (
         <div className={styles.container}>
-         
-                <GoogleLogin
-                    onSuccess={(codeResponse)=>onLoginSuccess(codeResponse)}
-                    onError={onLoginFailure}
-                />
-     
+            <div className={styles.card}>
+                <h1>ITRACK MOBILE SUPPORT</h1>
+                <div>
+                    <span>Sign in</span>
+                    <GoogleLogin
+                        onSuccess={(codeResponse)=>onLoginSuccess(codeResponse)}
+                        onError={onLoginFailure}
+                    />
+                </div>
+            </div>
         </div>
     );
 }

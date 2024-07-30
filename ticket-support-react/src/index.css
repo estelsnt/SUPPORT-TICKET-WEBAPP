@@ -1,7 +1,35 @@
 :root{
-
+  --dominant: #FFF;
+  --support: #f9f9f9;
+  --accent: orange;
+  --accent-text: #FFF;
+  --accent-variation1: red;
+  --accent-variation1-text: #FFF;
+  
+  --success: green;
+  --danger: red;
+  --warning: orange;
+  --info: blue;
 }
 *{
   margin: 0;
   padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+.bg-blur{
+  background-color: #51505077;
+  backdrop-filter: blur(5px);
+}
+.btn-primary{
+  background-color: var(--accent);
+  color: var(--accent-text);
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.3s, transform 0.3s;
+}
+.btn-primary:hover{
+  transform: scale(1.1);
+  filter: brightness(1.2);
 }

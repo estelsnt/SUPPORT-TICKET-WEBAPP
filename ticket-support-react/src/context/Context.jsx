@@ -1,14 +1,15 @@
 import React from 'react';
 import { UserProvider } from './UserContext';
 import {GoogleOAuthProvider, GoogleLogin} from '@react-oauth/google';
-
+import config from '../../../config.json';
 
 function Context({ children }) {
+
     return (
-        <GoogleOAuthProvider clientId="797777669990-3nrqege9htfihuo5e520psssk39ipanb.apps.googleusercontent.com">
-        <UserProvider>
-            { children }
-        </UserProvider>   
+        <GoogleOAuthProvider clientId={config.GOOGLE_CLIENT_ID}>
+            <UserProvider>
+                { children }
+            </UserProvider>   
         </GoogleOAuthProvider>
     );
 }
