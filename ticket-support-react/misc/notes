@@ -1,0 +1,20 @@
+requirements:
+
+users
+   - client
+      - login using gmail oauth2
+      - can create tickets
+   - user
+      - login using system credentials
+      - can view/process tickets
+   - admin
+      - login using system credentials
+      - can create other users, departments, products, categores, support types
+
+tech stack
+   - front end
+      - reactjs
+   - back end
+      - express js
+      - pm2
+      - mysql
