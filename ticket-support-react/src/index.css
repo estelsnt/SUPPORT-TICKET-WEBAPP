@@ -1,20 +1,21 @@
 :root{
-  --dominant: #FFF;
+  --dominant: #edf0f0;
   --support: #f9f9f9;
-  --accent: orange;
+  --accent: #1d2237;
   --accent-text: #FFF;
-  --accent-variation1: red;
-  --accent-variation1-text: #FFF;
+  --accent-variation1: #ffcc00;
+  --accent-variation1-text: #000;
   
-  --success: green;
-  --danger: red;
-  --warning: orange;
-  --info: blue;
+  --success: #28a745;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --info: #17a2b8;
 }
 *{
   margin: 0;
   padding: 0;
   font-family: 'Roboto', sans-serif;
+  color: #1e2230;
 }
 .bg-blur{
   background-color: #51505077;
