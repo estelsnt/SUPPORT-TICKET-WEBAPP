@@ -1,0 +1,78 @@
+.container{
+    background-color: var(--support);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+.usericon{
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    margin-left: auto;
+}
+.usericon button{
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-right: 15px;
+}
+.usericon img{
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    user-select: none;
+}
+.userinfo{
+    width: 150px;
+    position: absolute;
+    bottom: -60px;
+    right: 15px;
+    border-radius: 5px;
+    background-color: var(--support);
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s;
+
+}
+.show{
+    opacity: 1;
+    visibility: visible;
+}
+.userinfo ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    font-size: 1em;
+}
+.userinfo ul li{
+    padding: 15px;
+}
+.userinfo ul li button{
+    background-color: transparent;
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.userinfo ul li button span{
+    margin-left: 10px;
+}
+.userinfo ul li button:hover{
+    text-decoration: underline;
+}
+.menu{
+    font-size: 1.3em;
+    margin-left: 10px;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

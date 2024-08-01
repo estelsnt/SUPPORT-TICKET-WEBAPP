@@ -34,6 +34,17 @@
   transform: scale(1.1);
   filter: brightness(1.2);
 }
+.btn-close-s{
+  font-size: 0.8em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background-color: transparent;
+  cursor: pointer;
+}
 .loader-container{
   position: absolute;
   height: 100%;

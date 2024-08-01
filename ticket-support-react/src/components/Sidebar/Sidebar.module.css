@@ -1,0 +1,30 @@
+.container{
+    background-color: var(--support);
+    height: 100%;
+    transition: transform 0.5s;
+}
+.container ul li button{
+    width: 100%;
+    padding: 10px 15px;
+    font-size: 0.9em;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.5s;
+    display: flex;
+    width: 130px;
+    align-items: center;
+}
+.container ul li button span{
+    margin-left: 10px;
+}
+.container ul li button:hover{
+    background-color: var(--dominant);
+}
+.selected{
+    background-color: var(--dominant) !important;
+}
+.hidden{
+    position: absolute;
+    transform: translate(-130px);
+}

@@ -8,6 +8,7 @@ import NotFound from './NotFound/NotFound';
 import { verifyToken } from '../api/userApi';
 import { LoaderContext } from '../context/LoaderContext';
 import Support from './Support/Support';
+import Setup from './Setup/Setup';
 
 function Routes() {
 
@@ -50,9 +51,9 @@ function Routes() {
                 {
                     token && (
                         <>
-                            <Route path='/' element={<Landing />} />
                             <Route path='/dashboard' element={<Dashboard />} />
                             <Route path='/support' element={<Support />} />
+                            <Route path='/setup' element={<Setup />} />
                         </>
                     )
                 }

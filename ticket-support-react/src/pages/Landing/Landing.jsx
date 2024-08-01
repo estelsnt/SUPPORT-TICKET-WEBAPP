@@ -6,9 +6,11 @@ import { login } from '../../api/userApi';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { LoaderContext } from '../../context/LoaderContext';
+import { ToastContext } from '../../context/ToastContext';
 
 function Landing() {
 
+    const {toast} = useContext(ToastContext);
     const {loading} = useContext(LoaderContext);
     const {access} = useContext(UserContext)
     const navigate = useNavigate();
@@ -36,6 +38,7 @@ function Landing() {
 
     function onLoginFailure(){
         console.log('failed');
+        toast('Unable to login with Google. Please try again later', 'warning');
     }
 
     return (
