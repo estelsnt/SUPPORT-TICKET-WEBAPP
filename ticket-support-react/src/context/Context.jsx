@@ -1,6 +1,6 @@
 import React from 'react';
 import { UserProvider } from './UserContext';
-import {GoogleOAuthProvider, GoogleLogin} from '@react-oauth/google';
+import {GoogleOAuthProvider} from '@react-oauth/google';
 import config from '../../../config.json';
 
 function Context({ children }) {

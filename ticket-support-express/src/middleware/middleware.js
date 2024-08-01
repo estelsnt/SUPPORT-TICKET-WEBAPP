@@ -1,3 +1,25 @@
+const jwt = require('jsonwebtoken');
+const config = require('../../../config.json');
+const secretKey = config.SECRET_KEY;
+
+function generateToken(user){
+    const token = jwt.sign({user}, secretKey, {expiresIn: '30d'});
+    return token;
+}
+
+function validateToken(req, res, next){
+    const token = req.headers['authorization'];
+    if(!token){
+        return res.status(403).json({ message: 'Token is required' });
+    }
+    jwt.verify(token, secretKey, (err, decoded)=>{
+        if(err){
+            return res.status(403).json({ message: 'Invalid token' });
+        }
+        req.user = decoded.user;
+        next();
+    });
+}
 
 function checkJsonContentType(req, res, next) {
     if (req.is('application/json')) {
@@ -22,5 +44,7 @@ function checkJsonContentType(req, res, next) {
 }
   
 module.exports = {
-    checkJsonContentType
+    checkJsonContentType,
+    generateToken,
+    validateToken
 };

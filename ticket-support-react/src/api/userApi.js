@@ -16,3 +16,24 @@ export async function login(tokendata){
         console.error(error);
     };
 }
+
+export async function verifyToken(token){
+    try{
+        const response = await fetch(`${API_ENDPONT}/users/verify`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `${token}`
+            }
+        });
+        // will return status code 403 forbidden when token is not valid
+        if (response.ok) {
+            const data = await response.json();
+            return { status: true, data: data };
+        } else {
+            return { status: false };
+        }
+    }catch(error){
+        console.error(error);
+        return {status: false};
+    }
+}

@@ -7,11 +7,11 @@ function Layout({ children }) {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                { Header }
+                { <Header />}
             </div>
             <div className={styles.window}>
                 <div className={styles.sidebar}>
-                    { Sidebar }
+                    { <Sidebar /> }
                 </div>
                 <div className={styles.content}>
                     { children }

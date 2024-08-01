@@ -1,15 +1,37 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import styles from './Landing.module.css';
 import { GoogleLogin} from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import { login } from '../../api/userApi';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+import { LoaderContext } from '../../context/LoaderContext';
 
 function Landing() {
 
+    const {loading} = useContext(LoaderContext);
+    const {access} = useContext(UserContext)
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        // go to designated page
+        switch(access){
+            case 'user':
+            case 'admin':
+                navigate('/support');
+            break;
+            case 'client':
+                navigate('/dashboard');
+            break;
+        }
+    }, [access])
+
     async function onLoginSuccess(codeResponse){
-        console.log(jwtDecode(codeResponse.credential))
+        loading(true);
         const response = await login(jwtDecode(codeResponse.credential));
-        console.log(response);
+        loading(false);
+        localStorage.setItem('t', response.token);
+        location.reload();
     }
 
     function onLoginFailure(){
