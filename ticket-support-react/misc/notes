@@ -18,3 +18,12 @@ tech stack
       - express js
       - pm2
       - mysql
+
+setup
+   - set user access
+      - client: can create/interact tickets
+      - user: can see/interact to all tickets
+      - admin: have access to setup
+   - categories
+   - services
+   - products (with warranty tracking and support history)

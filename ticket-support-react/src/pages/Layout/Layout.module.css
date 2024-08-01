@@ -14,4 +14,6 @@
 .content{
     flex: 1;
     overflow-y: scroll;
+    height: 90vh;
+
 }

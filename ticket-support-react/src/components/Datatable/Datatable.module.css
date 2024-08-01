@@ -1,0 +1,74 @@
+.container{
+    width: 100%;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    font-size: 0.8em;
+}
+.tableContainer{
+    min-height: 300px;
+    overflow-x: scroll;
+}
+.tableContainer table{
+    width: 100%;
+    border-collapse: collapse;
+}
+.tableContainer table thead tr th{
+    background-color: var(--accent);
+    color: var(--accent-text);
+    text-align: start;
+    padding: 10px 15px;
+}
+.tableContainer table tbody tr td{
+    padding: 5px 15px;
+    border: 1px solid var(--support);
+}
+.tableContainer table tbody tr:hover{
+    background-color: var(--dominant);
+}
+.nodata td{
+    padding: 5px;
+    text-align: center;
+}
+.controls{
+    font-size: 1em;
+    margin-bottom: 15px;
+}
+.pagination{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+}
+.pagination button{
+    margin: 0 15px 0 15px;
+    background-color: var(--support);
+    border: 1px solid var(--support);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.selectable{
+    cursor: pointer;
+    transition: background-color 0.5s ease;
+}
+.selectable:hover{
+    background-color: var(--support) !important;
+}
+.controls{
+    display: flex;
+}
+.search{
+    border: 1px solid var(--dominant);
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #FFF;
+}
+.search input{
+    background-color: transparent;
+    border: none;
+    outline: none;
+    width: 200px;
+}

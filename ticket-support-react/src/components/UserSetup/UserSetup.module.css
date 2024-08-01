@@ -1,0 +1,15 @@
+.tableContainer{
+    margin-top: 25px;
+}
+.controls{
+    display: flex;
+    align-items: center;
+}
+.controls > span{
+    flex: 1;
+    margin-left: 5px;
+}
+.controls > button{
+    width: 130px;
+    padding: 5px 15px;
+}

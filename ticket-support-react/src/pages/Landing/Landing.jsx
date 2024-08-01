@@ -46,7 +46,16 @@ function Landing() {
             <div className={styles.card}>
                 <h1>SUPPORT TICKET</h1>
                 <div>
-                    <span>Sign in</span>
+                    <div className={styles.inputContainer} >
+                        <label>Username</label>
+                        <input type="text" />
+                    </div>
+                    <div className={styles.inputContainer} >
+                        <label>Password</label>
+                        <input type="password" />
+                    </div>
+                    <button className={`${styles.login} btn-primary`}>Login</button>
+                    <span>or</span>
                     <GoogleLogin
                         onSuccess={(codeResponse)=>onLoginSuccess(codeResponse)}
                         onError={onLoginFailure}

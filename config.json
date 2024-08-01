@@ -9,6 +9,5 @@
     "MYSQL_PASSWORD": "",
     "MYSQL_DATABASE": "ticketdb",
     "WEB_ROOT": "C://xampp/htdocs",
-    "ADMIN_EMAIL": "johnperalta.itrack@gmail.com",
     "SECRET_KEY": "itrack"
 }

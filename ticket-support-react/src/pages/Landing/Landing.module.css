@@ -27,4 +27,29 @@
 }
 .card h1{
     font-size: 1em;
+    margin-bottom: 20px;
+}
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 25px;
+    background-color: #FFF;
+    border: 1px solid var(--dominant);
+    padding: 5px;
+    position: relative;
+}
+.inputContainer label{
+    font-size: 0.7em;
+    position: absolute;
+    top: -15px;
+}
+.inputContainer input{
+    border: none;
+    outline: none;
+}
+.login{
+    width: 100%;
+    margin-bottom: 25px;
+    font-size: 0.9em;
 }

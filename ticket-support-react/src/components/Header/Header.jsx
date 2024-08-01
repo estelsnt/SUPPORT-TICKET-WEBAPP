@@ -10,7 +10,7 @@ import { SidebarContext } from '../../context/SidebarContext';
 function Header() {
 
     const navigate = useNavigate();
-    const {name, picture, setToken, setAccess, setEmail, setName, setPicture, setId} = useContext(UserContext);
+    const {access, name, picture, setToken, setAccess, setEmail, setName, setPicture, setId} = useContext(UserContext);
     const {showSidebar, setShowsidebar} = useContext(SidebarContext);
 
     const {width, height} = useWindowSize();
@@ -60,7 +60,6 @@ function Header() {
     }
 
     function menuClick(){
-        console.log('test');
         setShowsidebar(!showSidebar);
     }
 
@@ -78,7 +77,7 @@ function Header() {
                 </ul>
             </div>
             {
-                showMenu && (
+                access != 'client' && showMenu && (
                     <button className={styles.menu} onClick={menuClick} >
                         <BsFillMenuButtonWideFill />
                     </button>
