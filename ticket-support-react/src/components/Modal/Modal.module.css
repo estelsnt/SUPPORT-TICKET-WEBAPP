@@ -1,5 +1,8 @@
 .container{
     position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 900;
     height: 100%;
     width: 100%;
     display: flex;
@@ -14,15 +17,24 @@
     min-width: 200px;
     background-color: var(--dominant);
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
 }
 .header{
-    padding: 3px;
+    padding: 5px;
     display: flex;
+    border-bottom: 1px solid silver;
 }
 .header span{
     flex: 1;
+    font-size: 0.8em;
 }
 .show{
     visibility: visible;
     opacity: 1;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }

@@ -146,6 +146,14 @@ async function createDatabase() {
                 FOREIGN KEY (ticketId) REFERENCES tickets(id)            
             )
         `);
+        // insert default user
+        await query(`
+            INSERT INTO users (
+                email, password, name, picture, access, dateAdded
+            ) VALUES (
+                '${config.ADMIN_EMAIL}', '123456', 'Administrator', 'https://cdn-icons-png.flaticon.com/512/456/456212.png', 'admin', NOW() 
+            )    
+        `);
         console.log('tables created');
     } catch (error) {
         console.error('Error in createDatabase function:', error);

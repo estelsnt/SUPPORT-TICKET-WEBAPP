@@ -47,6 +47,15 @@
 .inputContainer input{
     border: none;
     outline: none;
+    flex: 1;
+}
+.inputContainer > div{
+    display: flex;
+}
+.inputContainer > div > button{
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
 }
 .login{
     width: 100%;

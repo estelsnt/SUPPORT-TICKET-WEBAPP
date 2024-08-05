@@ -37,3 +37,59 @@ export async function verifyToken(token){
         return {status: false};
     }
 }
+
+export async function addNewUser(token, email, name, access, password){
+    try{
+        const response = await fetch(`${API_ENDPONT}/users/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `${token}`
+            },
+            body: JSON.stringify({
+                email: email,
+                name: name,
+                access: access,
+                password: password
+            })
+        });
+        if(!response.ok) throw new Error('add new user api fails');
+        return await response.json();
+    }catch(error){
+        console.error(error);
+    }
+}
+
+export async function getUserList(token, access, query){
+    try{
+        const response = await fetch(`${API_ENDPONT}/users/${access}?search=${query}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': token
+            }
+        });
+        if(!response.ok) throw new Error('get user list api failed');
+        return await response.json();
+    }catch(error){
+        console.error(error);
+    } 
+}
+
+export async function manualLogin(email, password){
+    try{
+        const response = await fetch(`${API_ENDPONT}/users/login2`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json' 
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
+        });
+        if(!response.ok) throw new Error('login api failed');
+        return await response.json();
+    }catch(error){
+        console.error(error);
+    }
+}

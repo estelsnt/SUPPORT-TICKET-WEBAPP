@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Modal.module.css';
-import { FaBeer, FaCoffee } from 'react-icons/fa';
+import { BsXCircle } from 'react-icons/bs';
 
 function Modal({open, close, title, children}) {
 
@@ -9,11 +9,11 @@ function Modal({open, close, title, children}) {
             <div className={styles.modal}>
                 <div className={styles.header}>
                     <span>{title}</span>
-                    <button onClick={close} className='btn-close-s'>
-                        <FaCoffee />
+                    <button onClick={()=>close(false)} className='btn-close-s'>
+                        <BsXCircle />
                     </button>
                 </div>
-                <div>
+                <div className={styles.content}>
                     { children }
                 </div>
             </div>

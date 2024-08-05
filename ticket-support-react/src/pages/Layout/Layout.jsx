@@ -3,7 +3,6 @@ import styles from './Layout.module.css';
 import Header from '../../components/Header/Header';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import { UserContext } from '../../context/UserContext';
-import Loader from '../../components/Loader/Loader';
 
 function Layout({ children }) {
 
@@ -11,7 +10,6 @@ function Layout({ children }) {
 
     return (
         <>
-            <Loader />
             <div className={styles.container}>
                 <div className={styles.header}>
                     { <Header />}

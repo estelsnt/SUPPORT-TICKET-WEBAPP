@@ -14,7 +14,6 @@ export function ToastProvider({children}){
         setShowToast(true);
         setTimeout(()=>{
             setToastType('');
-            setToastMessage(null);
             setShowToast(false);
         }, 3000);
     }

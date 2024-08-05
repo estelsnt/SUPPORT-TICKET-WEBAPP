@@ -2,7 +2,8 @@ const express = require('express');
 const {
     login,
     manualUserRegister,
-    getUserList
+    getUserList,
+    manualLogin
 } = require('../controllers/usersController');
 const {
     checkJsonContentType,
@@ -14,6 +15,12 @@ const route = express.Router();
 route.post('/login', checkJsonContentType, async (req, res)=>{
     const data = req.body;
     const response = await login(data);
+    res.json(response);
+});
+
+route.post('/login2', checkJsonContentType, async (req, res)=>{
+    const data = req.body;
+    const response = await manualLogin(data.email, data.password);
     res.json(response);
 });
 
@@ -29,7 +36,7 @@ route.post('/verify', validateToken, async (req, res)=>{
 
 route.get('/:access',validateToken, async (req, res)=>{
     const access = req.params.access;
-    const query = req.query.query;
+    const query = req.query.search;
     const response = await getUserList(query, access);
     res.send(response);
 });

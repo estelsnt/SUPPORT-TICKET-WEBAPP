@@ -2,11 +2,11 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    z-index: 1001;
+    z-index: 10001;
     background-color: var(--dominant);
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0.5s, opacity 0.5s;
+    transition: visibility 1s, opacity 1s;
 }
 
 .show {

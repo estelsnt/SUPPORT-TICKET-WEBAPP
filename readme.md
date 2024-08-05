@@ -36,4 +36,5 @@
 
 ###### notes
 - you should change cors information on ticket-support-express/index.js
-- by default all users are clients. manually set your access to admin on database initially
+- by default all users are clients.
+- default admin user is your ADMIN_EMAIL in config.json and password is: 123456

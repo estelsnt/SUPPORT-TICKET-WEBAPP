@@ -1,12 +1,14 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import styles from './Landing.module.css';
 import { GoogleLogin} from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
-import { login } from '../../api/userApi';
+import { login, manualLogin } from '../../api/userApi';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../context/UserContext';
 import { LoaderContext } from '../../context/LoaderContext';
 import { ToastContext } from '../../context/ToastContext';
+import { FaLock, FaLockOpen } from 'react-icons/fa';
+import { redBorderMarker } from '../../api/helper';
 
 function Landing() {
 
@@ -14,6 +16,12 @@ function Landing() {
     const {loading} = useContext(LoaderContext);
     const {access} = useContext(UserContext)
     const navigate = useNavigate();
+    const [maskPassword, setMaskPassword] = useState(true);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    
+    const usernameRef = useRef();
+    const passwordRef = useRef();
 
     useEffect(()=>{
         // go to designated page
@@ -37,8 +45,29 @@ function Landing() {
     }
 
     function onLoginFailure(){
-        console.log('failed');
         toast('Unable to login with Google. Please try again later', 'warning');
+    }
+
+    async function loginClick(){
+        console.log('test');
+        if(username === '' || password === ''){
+            redBorderMarker(usernameRef.current);
+            redBorderMarker(passwordRef.current);
+            return;
+        }
+        loading(true);
+        const response = await manualLogin(username, password);
+        loading(false);
+        console.log(response);
+        toast(response.message, response.status ? 'success' : 'danger');
+        if(response.status){
+            loading(true);
+            localStorage.setItem('t', response.token);
+            location.reload();
+        }else{
+            redBorderMarker(usernameRef.current);
+            redBorderMarker(passwordRef.current);
+        }
     }
 
     return (
@@ -46,20 +75,28 @@ function Landing() {
             <div className={styles.card}>
                 <h1>SUPPORT TICKET</h1>
                 <div>
-                    <div className={styles.inputContainer} >
+                    <div className={styles.inputContainer} ref={usernameRef} >
                         <label>Username</label>
-                        <input type="text" />
+                        <div>
+                            <input type="text" value={username} onChange={(e)=>setUsername(e.target.value)} />
+                        </div>
                     </div>
-                    <div className={styles.inputContainer} >
+                    <div className={styles.inputContainer} ref={passwordRef} >
                         <label>Password</label>
-                        <input type="password" />
+                        <div>
+                            <input type={maskPassword ? 'password' : 'text'} value={password} onChange={(e)=>setPassword(e.target.value)} />
+                            <button onMouseEnter={()=>setMaskPassword(false)} onMouseLeave={()=>setMaskPassword(true)} >
+                                {
+                                    maskPassword ? <FaLock /> : <FaLockOpen />
+                                }
+                            </button>
+                        </div>
                     </div>
-                    <button className={`${styles.login} btn-primary`}>Login</button>
+                    <button className={`${styles.login} btn-primary`} onClick={loginClick} >Login</button>
                     <span>or</span>
                     <GoogleLogin
                         onSuccess={(codeResponse)=>onLoginSuccess(codeResponse)}
-                        onError={onLoginFailure}
-                    />
+                        onError={onLoginFailure} />
                 </div>
             </div>
         </div>

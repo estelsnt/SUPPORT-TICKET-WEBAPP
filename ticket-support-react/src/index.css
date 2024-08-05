@@ -48,7 +48,7 @@
   filter: brightness(1.2);
 }
 .btn-close-s{
-  font-size: 0.8em;
+  font-size: 1em;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -57,6 +57,10 @@
   border-radius: 50%;
   background-color: transparent;
   cursor: pointer;
+  transition: transform 1s;
+}
+.btn-close-s:hover{
+  transform: scale(1.1);
 }
 .loader-container{
   position: absolute;
@@ -80,6 +84,42 @@
 }
 .section h6{
   font-size: 1em;
+}
+.input-field{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+.input-field label{
+  font-size: 0.8em;
+  margin-left: 5px;
+}
+.input-field > div{
+  display: flex;
+  border: 1px solid silver;
+  background-color: #FFF;
+  padding: 3px;
+  border-radius: 5px;
+}
+.input-field > div > input{
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  outline: none;
+  padding-left: 5px;
+  padding-right: 3px;
+}
+.input-field > div > button{
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+}
+.input-field > div > select{
+  flex: 1;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  outline: none;
 }
 ::-webkit-scrollbar {
   width: 4px; /* Width of the scrollbar */

@@ -11,6 +11,8 @@ import Support from './Support/Support';
 import Setup from './Setup/Setup';
 import Splash from '../components/Splash/Splash';
 import { SplashContext } from '../context/SplashContext';
+import Toast from '../components/Toast/Toast';
+import Loader from '../components/Loader/Loader';
 
 function Routes() {
 
@@ -50,6 +52,8 @@ function Routes() {
     return (
         <>
             <Splash />
+            <Toast />
+            <Loader />
             <BrowserRouter basename={config.FRONTEND_BASE_URL}>
                 <Router>
                     <Route path='/' element={<Landing />} />
