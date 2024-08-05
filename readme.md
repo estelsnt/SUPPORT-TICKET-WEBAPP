@@ -33,6 +33,7 @@
 - WEB_ROOT: path where your web server will host the front end. ex: C://xampp/htdocs, /apache2/html, etc,..
             upon building the front end it should copy the build files to this path
 - SECRET_KEY: used for generating JSON Web Tokens
+- ADMIN_EMAIL: any email you want. this will be the email for the first default user
 
 ###### notes
 - you should change cors information on ticket-support-express/index.js
