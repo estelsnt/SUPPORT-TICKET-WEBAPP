@@ -50,14 +50,103 @@ async function createDatabase() {
                 id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
                 sub TEXT,
                 email VARCHAR(250),
+                password VARCHAR(250),
                 name VARCHAR(250),
                 picture TEXT,
                 access VARCHAR(50),
                 dateAdded DATETIME
             )
         `);
+        // Create categories table
+        await query(`
+            CREATE TABLE IF NOT EXISTS categories (
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                category VARCHAR(250),
+                name VARCHAR(250)
+            )
+        `);
+        // Create products table
+        await query(`
+            CREATE TABLE IF NOT EXISTS products (
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                categoryId INT,
+                serialNumber VARCHAR(250),
+                warranty DATE,
+                FOREIGN KEY (categoryId) REFERENCES categories(id)
+            )
+        `);
+        // Create tickets table
+        await query(`
+            CREATE TABLE IF NOT EXISTS tickets (
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                categoryId INT,
+                serialNumber VARCHAR(250),
+                description TEXT,
+                status VARCHAR(100),
+                closedBy INT,
+                dateAdded DATETIME,
+                lastModified DATETIME,
+                FOREIGN KEY (categoryId) REFERENCES categories(id),
+                FOREIGN KEY (closedBy) REFERENCES users(id)
+            )
+        `);
+        // Create file attachements table
+        await query(`
+            CREATE TABLE IF NOT EXISTS fileAttachment (
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                ticketId INT,
+                fileName VARCHAR(250),
+                dateAdded DATETIME,
+                FOREIGN KEY (ticketId) REFERENCES tickets(id)            
+            )
+        `);
+        // Create image attachements table
+        await query(`
+            CREATE TABLE IF NOT EXISTS imageAttachment (
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                ticketId INT,
+                image MEDIUMTEXT,
+                dateAdded DATETIME,
+                FOREIGN KEY (ticketId) REFERENCES tickets(id)            
+            )
+        `);
+        // Create file attachements table
+        await query(`
+            CREATE TABLE IF NOT EXISTS conversation (
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                userId INT,
+                ticketId INT,
+                message TEXT,
+                dateAdded DATETIME,
+                FOREIGN KEY (userId) REFERENCES users(id),
+                FOREIGN KEY (ticketId) REFERENCES tickets(id)            
+            )
+        `);
+        // Create assignment table
+        await query(`
+            CREATE TABLE IF NOT EXISTS assignment (
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                userId INT,
+                categoryId INT,
+                dateAdded DATETIME,
+                FOREIGN KEY (userId) REFERENCES users(id),
+                FOREIGN KEY (categoryId) REFERENCES categories(id)
+            )
+        `);
+        // Create refferal table
+        await query(`
+            CREATE TABLE IF NOT EXISTS refferal (
+                id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+                toUser INT,
+                byUser INT,
+                ticketId INT,
+                dateAdded DATETIME,
+                FOREIGN KEY (toUser) REFERENCES users(id),
+                FOREIGN KEY (byUser) REFERENCES users(id),
+                FOREIGN KEY (ticketId) REFERENCES tickets(id)            
+            )
+        `);
         console.log('tables created');
-  
     } catch (error) {
         console.error('Error in createDatabase function:', error);
     } finally {

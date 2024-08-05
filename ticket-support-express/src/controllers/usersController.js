@@ -46,7 +46,40 @@ async function getUserDataFromId(id){
     }
 }
 
+async function getUserList(query, access){
+    try{
+        const data = await query(`
+            SELECT * FROM users
+            WHERE (name LIKE ?
+            OR email LIKE ?)
+            AND access = ?
+            LIMIT 50
+        `, [`%${query}%`, `%${query}%`, access]);
+        console.log(data);
+    }catch(error){
+        console.error(error);
+    }
+}
+
+async function manualUserRegister(email, name, access, password){
+    try{
+        const response = await query(`
+            INSERT INTO users (
+                email, password, name, picture, access, dateAdded
+            ) VALUES (
+                ?, ?, ?, '', ?, NOW() 
+            )
+        `, [email, password, name, access]);
+        console.log(response.affectedRows);
+        return {statsu: response.affectedRows > 0};
+    }catch(error){
+        console.error(error);  
+    }
+}
+
 module.exports = {
     login,
-    getUserDataFromId
+    getUserDataFromId,
+    getUserList,
+    manualUserRegister
 };

@@ -5,6 +5,7 @@ export const LoaderContext = createContext();
 export function LoaderProvider({ children }){
     const [isLoading, setIsLoading] = useState(false);
     function loading(status){
+        console.log(status);
         setIsLoading(status);
     }
     return (

@@ -1,6 +1,8 @@
 const express = require('express');
 const {
-    login
+    login,
+    manualUserRegister,
+    getUserList
 } = require('../controllers/usersController');
 const {
     checkJsonContentType,
@@ -23,6 +25,19 @@ route.post('/verify', validateToken, async (req, res)=>{
         picture: req.user.picture,
         access: req.user.access
     });
+});
+
+route.get('/:access',validateToken, async (req, res)=>{
+    const access = req.params.access;
+    const query = req.query.query;
+    const response = await getUserList(query, access);
+    res.send(response);
+});
+
+route.post('/add', validateToken, checkJsonContentType, async (req, res)=>{
+    const data = req.body;
+    const response = await manualUserRegister(data.email, data.name, data.access, data.password);
+    res.json(response);
 });
 
 module.exports = route;

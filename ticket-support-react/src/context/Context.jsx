@@ -3,6 +3,7 @@ import { UserProvider } from './UserContext';
 import { LoaderProvider } from './LoaderContext';
 import { ToastProvider } from './ToastContext';
 import { SidebarProvider } from './SidebarContext';
+import { SplashProvider } from './SplashContext';
 import {GoogleOAuthProvider} from '@react-oauth/google';
 import config from '../../../config.json';
 
@@ -14,7 +15,9 @@ function Context({ children }) {
                 <UserProvider>
                     <ToastProvider>
                         <SidebarProvider>
-                            { children }
+                            <SplashProvider>
+                                { children }    
+                            </SplashProvider>     
                         </SidebarProvider>
                     </ToastProvider>
                 </UserProvider>   

@@ -28,8 +28,11 @@ function debounce(func, delay) {
  *  ['1', 'john', 25, <button>edit</button>],
  *  ...
  * ]
+ * rowClickEvent: pass a function here: it wll return the array of data from clicked row
+ * isRowSelectable: when set to true this will make pointer to cursor on rows and calls the rowClickEvent when clicked
+ * searchable: hides/show the search box
  */
-function Datatable({ columns = [], data = [], rowClickEvent, isRowSelectable = false }) {
+function Datatable({ columns = [], data = [], rowClickEvent, isRowSelectable = false, searchable = true }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredData, setFilteredData] = useState(data);
     const [currentPage, setCurrentPage] = useState(1);
@@ -87,14 +90,18 @@ function Datatable({ columns = [], data = [], rowClickEvent, isRowSelectable = f
     return (
         <div className={styles.container}>
             <div className={styles.controls}>
-                <div className={styles.search}>
-                    <input 
-                        type="text" 
-                        placeholder="Search" 
-                        onChange={(e) => setSearchQuery(e.target.value)} 
-                    />
-                    <BsSearch />
-                </div>
+                {
+                    searchable && (
+                        <div className={styles.search}>
+                            <input 
+                                type="text" 
+                                placeholder="Search" 
+                                onChange={(e) => setSearchQuery(e.target.value)} 
+                            />
+                            <BsSearch />
+                        </div>
+                    )
+                }
             </div>
             <div className={styles.tableContainer}>
                 <table>

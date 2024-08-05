@@ -1,0 +1,15 @@
+.container {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1001;
+    background-color: var(--dominant);
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.5s, opacity 0.5s;
+}
+
+.show {
+    visibility: visible;
+    opacity: 1;
+}

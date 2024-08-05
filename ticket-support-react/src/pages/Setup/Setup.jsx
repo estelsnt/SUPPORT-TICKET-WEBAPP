@@ -3,7 +3,7 @@ import styles from './Setup.module.css';
 import Layout from '../Layout/Layout';
 import UserSetup from '../../components/UserSetup/UserSetup';
 import ProductSetup from '../../components/ProductSetup/ProductSetup';
-import ServiceSetup from '../../components/ServiceSetup/ServiceSetup';
+// import ServiceSetup from '../../components/ServiceSetup/ServiceSetup';
 
 function Setup() {
 
@@ -15,9 +15,9 @@ function Setup() {
             <div className='section'>
                 <ProductSetup />
             </div>
-            <div className='section'>
+            {/* <div className='section'>
                 <ServiceSetup />
-            </div>
+            </div> */}
         </Layout>
     );
 }

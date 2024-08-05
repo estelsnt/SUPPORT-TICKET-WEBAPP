@@ -13,3 +13,17 @@
     width: 130px;
     padding: 5px 15px;
 }
+.search{
+    border: 1px solid silver;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    border-radius: 5px;
+    background-color: #FFF;
+}
+.search input{
+    outline: none;
+    border: none;
+    background-color: transparent;
+}

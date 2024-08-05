@@ -9,11 +9,14 @@ import { verifyToken } from '../api/userApi';
 import { LoaderContext } from '../context/LoaderContext';
 import Support from './Support/Support';
 import Setup from './Setup/Setup';
+import Splash from '../components/Splash/Splash';
+import { SplashContext } from '../context/SplashContext';
 
 function Routes() {
 
     const {loading} = useContext(LoaderContext);
     const {token, setToken, setAccess, setEmail, setName, setPicture, setId} = useContext(UserContext);
+    const {splash} = useContext(SplashContext);
 
     /**
      * Authentication process:
@@ -30,9 +33,9 @@ function Routes() {
     }, []);
     
     async function tryVerifyToken(){
-        loading(true);
+        splash(true);
         const response = await verifyToken(localStorage.getItem('t'));
-        loading(false);
+        splash(false);
         if(!response.status){
             return;
         }
@@ -45,21 +48,24 @@ function Routes() {
     }
 
     return (
-        <BrowserRouter basename={config.FRONTEND_BASE_URL}>
-            <Router>
-                <Route path='/' element={<Landing />} />
-                {
-                    token && (
-                        <>
-                            <Route path='/dashboard' element={<Dashboard />} />
-                            <Route path='/support' element={<Support />} />
-                            <Route path='/setup' element={<Setup />} />
-                        </>
-                    )
-                }
-                <Route path='*' element={<NotFound />} />
-            </Router>
-        </BrowserRouter>
+        <>
+            <Splash />
+            <BrowserRouter basename={config.FRONTEND_BASE_URL}>
+                <Router>
+                    <Route path='/' element={<Landing />} />
+                    {
+                        token && (
+                            <>
+                                <Route path='/dashboard' element={<Dashboard />} />
+                                <Route path='/support' element={<Support />} />
+                                <Route path='/setup' element={<Setup />} />
+                            </>
+                        )
+                    }
+                    <Route path='*' element={<NotFound />} />
+                </Router>
+            </BrowserRouter>
+        </>
     );
 }
 
