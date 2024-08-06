@@ -8,6 +8,7 @@
 .controls > span{
     flex: 1;
     margin-left: 5px;
+    font-size: 0.6em;
 }
 .controls > button{
     width: 130px;
@@ -52,6 +53,9 @@
     justify-content: flex-end;
     padding: 5px 10px;
 }
+.addUserModal > div > button{
+    margin-left: 10px;
+}
 .userInfo{
     display: flex;
     flex-direction: column;
@@ -71,7 +75,6 @@
     border: 1px solid silver;
     padding: 5px;
     margin: 5px;
-    border-radius: 5px;
     display: flex;
     width: 200px;
     overflow: hidden;

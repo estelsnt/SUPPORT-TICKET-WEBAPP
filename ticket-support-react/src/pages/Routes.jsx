@@ -1,4 +1,4 @@
-import React, { Children, useContext, useEffect } from 'react';
+import React, { Children, useContext, useEffect, useState } from 'react';
 import {BrowserRouter, Routes as Router, Route} from 'react-router-dom';
 import Landing from './Landing/Landing';
 import Dashboard from './Dashboard/Dashboard';
@@ -10,7 +10,6 @@ import { LoaderContext } from '../context/LoaderContext';
 import Support from './Support/Support';
 import Setup from './Setup/Setup';
 import Splash from '../components/Splash/Splash';
-import { SplashContext } from '../context/SplashContext';
 import Toast from '../components/Toast/Toast';
 import Loader from '../components/Loader/Loader';
 
@@ -18,7 +17,8 @@ function Routes() {
 
     const {loading} = useContext(LoaderContext);
     const {token, setToken, setAccess, setEmail, setName, setPicture, setId} = useContext(UserContext);
-    const {splash} = useContext(SplashContext);
+
+    const [isReady, setIsReady] = useState(false);
 
     /**
      * Authentication process:
@@ -31,13 +31,14 @@ function Routes() {
         // checks if token already exist
         if(localStorage.getItem('t')){
             tryVerifyToken();
+        }else{
+            setIsReady(true);
         }
     }, []);
     
     async function tryVerifyToken(){
-        splash(true);
         const response = await verifyToken(localStorage.getItem('t'));
-        splash(false);
+        setIsReady(true);
         if(!response.status){
             return;
         }
@@ -51,7 +52,7 @@ function Routes() {
 
     return (
         <>
-            <Splash />
+            <Splash show={isReady}/>
             <Toast />
             <Loader />
             <BrowserRouter basename={config.FRONTEND_BASE_URL}>

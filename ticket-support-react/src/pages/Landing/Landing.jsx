@@ -40,8 +40,12 @@ function Landing() {
         loading(true);
         const response = await login(jwtDecode(codeResponse.credential));
         loading(false);
-        localStorage.setItem('t', response.token);
-        location.reload();
+        if(response.status){
+            localStorage.setItem('t', response.token);
+            location.reload();
+        }else{
+            toast(response.message, 'danger');
+        }
     }
 
     function onLoginFailure(){
@@ -49,7 +53,6 @@ function Landing() {
     }
 
     async function loginClick(){
-        console.log('test');
         if(username === '' || password === ''){
             redBorderMarker(usernameRef.current);
             redBorderMarker(passwordRef.current);
@@ -58,7 +61,6 @@ function Landing() {
         loading(true);
         const response = await manualLogin(username, password);
         loading(false);
-        console.log(response);
         toast(response.message, response.status ? 'success' : 'danger');
         if(response.status){
             loading(true);

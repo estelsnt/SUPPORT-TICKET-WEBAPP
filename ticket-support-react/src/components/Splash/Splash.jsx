@@ -1,13 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import styles from './Splash.module.css';
-import { SplashContext } from '../../context/SplashContext';
 
-function Splash() {
-
-    const {showSplash} = useContext(SplashContext); 
+function Splash({show}) {
 
     return (
-        <div className={`${styles.container} ${showSplash ? styles.show : ''}`}>
+        <div className={`${styles.container} ${!show ? styles.show : ''}`}>
             
         </div>
     );

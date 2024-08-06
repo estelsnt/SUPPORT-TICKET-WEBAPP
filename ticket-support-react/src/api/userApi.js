@@ -93,3 +93,25 @@ export async function manualLogin(email, password){
         console.error(error);
     }
 }
+
+export async function editUser(token, email, name, password, access){
+    try{
+        const response = await fetch(`${API_ENDPONT}/users/edit`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify({
+                email: email,
+                name: name,
+                password: password,
+                access: access
+            })
+        });
+        if(!response.ok) throw new Error('user edit api failed');
+        return await response.json();
+    }catch(error){
+        console.error(error);
+    }
+}
