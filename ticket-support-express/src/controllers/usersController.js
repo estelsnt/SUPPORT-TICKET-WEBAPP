@@ -27,7 +27,7 @@ async function manualLogin(email, password){
     try{
         // get password
         const find = await query(`
-            SELECT * FROM users WHERE email = ?
+            SELECT * FROM users WHERE email = ? AND isDeleted = 0
         `, [email]);
         if(find.length > 0){  
             if(await verifyPassword(password, find[0].password)){
@@ -64,6 +64,10 @@ async function login(userdata){
             `, [userdata.sub, userdata.email, userdata.name, userdata.picture]);
             userid = result.insertId;
         }else{
+            // check if this user is deleted
+            if(isRegistered[0].isDeleted === 1){
+                return {status: false, message: 'Your account has been disabled.'};
+            }
             // optionally update user info based on returned gmail oauth2 api data, in case when user is manually inserted.
             await query(`
                 UPDATE users SET
@@ -77,7 +81,7 @@ async function login(userdata){
         }
         // apply banned user check here
         const token = generateToken({...userdata, id: userid, access: access});
-        return {token: token, user: {
+        return {status: true, token: token, user: {
             id: userid,
             name: userdata.name,
             email: userdata.email,
@@ -102,14 +106,20 @@ async function getUserDataFromId(id){
 
 async function getUserList(search, access){
     try{
+        // retrieve first 50 rows
         const data = await query(`
-            SELECT * FROM users
+            SELECT access, email, id, name, picture FROM users
             WHERE (name LIKE ?
             OR email LIKE ?)
             AND access = ?
+            AND isDeleted = 0
             LIMIT 50
         `, [`%${search}%`, `%${search}%`, access]);
-        return {status: true, message: `${data.length} users found`, data: data};
+        // count all
+        const count = await query(`
+            SELECT COUNT(id) AS 'count' FROM users WHERE access = ? AND isDeleted = 0
+        `, [access]);
+        return {status: true, message: count[0].count, data: data};
     }catch(error){
         console.error(error);
     }
@@ -138,10 +148,30 @@ async function manualUserRegister(email, name, access, password){
     }
 }
 
+async function editUser(email, name, password, access) {
+    try{
+        let updated = 0;
+        const response = await query(`
+            UPDATE users SET name = ?, access = ? WHERE email = ?    
+        `, [name, access, email]);
+        updated += response.changedRows;
+        if(password){
+            const pup = await query(`
+                UPDATE users SET password = ? WHERE email = ?
+            `, [await generateHash(password), email]);
+            updated += pup.changedRows;
+        }
+        return {status: updated > 0 ? true : false, message: updated > 0 ? 'User info updated' : 'No changes has been made'};
+    }catch(error){
+        console.error(error);
+    }
+}
+
 module.exports = {
     login,
     getUserDataFromId,
     getUserList,
     manualUserRegister,
-    manualLogin
+    manualLogin,
+    editUser
 };

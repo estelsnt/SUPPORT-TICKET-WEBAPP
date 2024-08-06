@@ -3,7 +3,8 @@ const {
     login,
     manualUserRegister,
     getUserList,
-    manualLogin
+    manualLogin,
+    editUser
 } = require('../controllers/usersController');
 const {
     checkJsonContentType,
@@ -44,6 +45,12 @@ route.get('/:access',validateToken, async (req, res)=>{
 route.post('/add', validateToken, checkJsonContentType, async (req, res)=>{
     const data = req.body;
     const response = await manualUserRegister(data.email, data.name, data.access, data.password);
+    res.json(response);
+});
+
+route.post('/edit', validateToken, checkJsonContentType, async (req, res)=>{
+    const data = req.body;
+    const response = await editUser(data.email, data.name, data.password, data.access);
     res.json(response);
 });
 

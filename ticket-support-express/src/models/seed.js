@@ -54,7 +54,8 @@ async function createDatabase() {
                 name VARCHAR(250),
                 picture TEXT,
                 access VARCHAR(50),
-                dateAdded DATETIME
+                dateAdded DATETIME,
+                isDeleted INT DEFAULT 0
             )
         `);
         // Create categories table
