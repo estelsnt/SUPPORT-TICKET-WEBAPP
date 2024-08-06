@@ -167,11 +167,24 @@ async function editUser(email, name, password, access) {
     }
 }
 
+async function disableUser(email){
+    try{
+        const response = await query(`UPDATE users SET isDeleted = 1 WHERE email = ?`, [email]);
+        return {
+            status: response.changedRows > 0 ? true : false, 
+            message: response.changedRows > 0 ? 'User account disabled' : 'Unable to update user info, please try again later'
+        };
+    }catch(error){
+        console.error(error);
+    }
+}
+
 module.exports = {
     login,
     getUserDataFromId,
     getUserList,
     manualUserRegister,
     manualLogin,
-    editUser
+    editUser,
+    disableUser
 };

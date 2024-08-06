@@ -4,7 +4,8 @@ const {
     manualUserRegister,
     getUserList,
     manualLogin,
-    editUser
+    editUser,
+    disableUser
 } = require('../controllers/usersController');
 const {
     checkJsonContentType,
@@ -51,6 +52,12 @@ route.post('/add', validateToken, checkJsonContentType, async (req, res)=>{
 route.post('/edit', validateToken, checkJsonContentType, async (req, res)=>{
     const data = req.body;
     const response = await editUser(data.email, data.name, data.password, data.access);
+    res.json(response);
+});
+
+route.post('/disable', validateToken, checkJsonContentType, async (req, res)=>{
+    const data = req.body;
+    const response = await disableUser(data.email);
     res.json(response);
 });
 
