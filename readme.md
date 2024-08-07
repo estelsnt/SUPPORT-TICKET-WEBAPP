@@ -30,8 +30,6 @@
 - MYSQL_USER: mysql user name
 - MYSQL_PASSWORD: mysql password
 - MYSQL_DATABASE: database name for this system
-- WEB_ROOT: path where your web server will host the front end. ex: C://xampp/htdocs, /apache2/html, etc,..
-            upon building the front end it should copy the build files to this path
 - SECRET_KEY: used for generating JSON Web Tokens
 - ADMIN_EMAIL: any email you want. this will be the email for the first default user
 
@@ -39,3 +37,4 @@
 - you should change cors information on ticket-support-express/index.js
 - by default all users are clients.
 - default admin user is your ADMIN_EMAIL in config.json and password is: 123456
+- you can host the front end at same server with backend by copying the build files on dist/ to ticket-support-express/public

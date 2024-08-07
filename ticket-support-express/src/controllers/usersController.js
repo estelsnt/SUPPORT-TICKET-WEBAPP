@@ -180,6 +180,8 @@ async function disableUser(email){
 }
 
 module.exports = {
+    generateHash,
+    verifyPassword,
     login,
     getUserDataFromId,
     getUserList,

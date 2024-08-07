@@ -1,5 +1,6 @@
 const mysql = require('mysql2');
 const config = require('../../../config.json');
+const { generateHash } = require('../controllers/usersController');
 
 const connection = mysql.createConnection({
     host: config.MYSQL_HOST,
@@ -152,7 +153,7 @@ async function createDatabase() {
             INSERT INTO users (
                 email, password, name, picture, access, dateAdded
             ) VALUES (
-                '${config.ADMIN_EMAIL}', '123456', 'Administrator', 'https://cdn-icons-png.flaticon.com/512/456/456212.png', 'admin', NOW() 
+                '${config.ADMIN_EMAIL}', '${await generateHash('123456')}', 'Administrator', 'https://cdn-icons-png.flaticon.com/512/456/456212.png', 'admin', NOW() 
             )    
         `);
         console.log('tables created');

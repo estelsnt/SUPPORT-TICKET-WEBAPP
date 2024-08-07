@@ -1,14 +1,13 @@
 {
     "GOOGLE_CLIENT_ID": "797777669990-3nrqege9htfihuo5e520psssk39ipanb.apps.googleusercontent.com",
     "EXPRESS_PORT": "3000",
-    "MYSQL_PORT": "3306",
-    "BACKEND_BASE_URL": "http://localhost:3000",
+    "BACKEND_BASE_URL": "http://localhost:3000/api",
     "FRONTEND_BASE_URL": "/",
+    "MYSQL_PORT": "3306",
     "MYSQL_HOST": "localhost",
     "MYSQL_USER": "root",
     "MYSQL_PASSWORD": "",
     "MYSQL_DATABASE": "ticketdb",
-    "WEB_ROOT": "C://xampp/htdocs",
     "SECRET_KEY": "itrack",
     "ADMIN_EMAIL": "johnperalta.itrack@gmail.com"
 }
