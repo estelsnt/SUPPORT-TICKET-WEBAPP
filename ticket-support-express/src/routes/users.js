@@ -12,14 +12,16 @@ const {
     validateToken
 } = require('../middleware/middleware');
 
-const route = express.Router();
+const route = express.Router(); 
 
+// login from google OAuth2 (will return jwt)
 route.post('/login', checkJsonContentType, async (req, res)=>{
     const data = req.body;
     const response = await login(data);
     res.json(response);
 });
 
+// manually login from landing page (will just show status if login success)
 route.post('/login2', checkJsonContentType, async (req, res)=>{
     const data = req.body;
     const response = await manualLogin(data.email, data.password);

@@ -27,6 +27,8 @@ async function startApp() {
         // API routes
         const userRoute = require('./src/routes/users');
         app.use('/api/users', userRoute);
+        const categoryRoute = require('./src/routes/categories');
+        app.use('/api/categories', categoryRoute);
 
         // Catch-all handler to return the React app for any request that doesn't match an API route
         app.get('*', (req, res) => {

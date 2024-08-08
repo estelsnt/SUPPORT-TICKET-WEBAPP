@@ -104,7 +104,7 @@ async function getUserDataFromId(id){
     }
 }
 
-async function getUserList(search, access){
+async function getUserList(search = '', access){
     try{
         // retrieve first 50 rows
         const data = await query(`
