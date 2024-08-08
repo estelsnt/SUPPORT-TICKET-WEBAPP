@@ -13,7 +13,7 @@ export function LoaderProvider({ children }){
             {
                 isLoading, setIsLoading, loading
             }
-        }>
+        } >
             { children }
         </LoaderContext.Provider>
     )

@@ -4,6 +4,7 @@ export const ToastContext = createContext();
 
 export function ToastProvider({children}){
 
+    // defines toast behavior
     const [showToast, setShowToast] = useState(false);
     const [toastType, setToastType] = useState('');
     const [toastMessage, setToastMessage] = useState(null);
@@ -20,13 +21,13 @@ export function ToastProvider({children}){
 
     return (
         <ToastContext.Provider value={
-            {
-                showToast, setShowToast,
-                toastType, setToastType,
-                toastMessage, setToastMessage,
-                toast
-            }
-        }>
+                {
+                    showToast, setShowToast,
+                    toastType, setToastType,
+                    toastMessage, setToastMessage,
+                    toast
+                }
+            } >
             { children }
         </ToastContext.Provider>
     );

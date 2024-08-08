@@ -1,23 +1,22 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import Datatable from '../Datatable/Datatable';
-import styles from './UserSetup.module.css';
 import { LoaderContext } from '../../context/LoaderContext';
 import { BsSearch } from 'react-icons/bs';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import Modal from '../Modal/Modal';
 import { redBorderMarker } from '../../api/helper';
 import { addNewUser, getUserList, editUser } from '../../api/userApi';
 import { UserContext } from '../../context/UserContext';
 import { ToastContext } from '../../context/ToastContext';
 import { useTransition, animated } from '@react-spring/web';
+import styles from './UserSetup.module.css';
+import Modal from '../Modal/Modal';
 
 function UserSetup() {
+
     // context states
     const { loading } = useContext(LoaderContext);
     const { token } = useContext(UserContext);
     const { toast } = useContext(ToastContext);
-
 
     // main data state
     const [usersList, setUsersList] = useState([]); // this goes to transition hook before rendering in UI
@@ -45,29 +44,31 @@ function UserSetup() {
     const passwordRef = useRef();
     const accessRef = useRef();
 
-
-    // for debounce searching
+    // filter states
     const [accessFilter, setAccessFilter] = useState('client');
     const [searchFilter, setSearchFilter] = useState('');
+    // for debounce searching
     const [debouncedInputValue, setDebouncedInputValue] = useState("");
+
     useEffect(() => {
         const delayInputTimeoutId = setTimeout(() => {
             setDebouncedInputValue(searchFilter);
         }, 500);
         return () => clearTimeout(delayInputTimeoutId);
     }, [searchFilter, 500]);
+
     useEffect(()=>{
         searchUsers();
-    }, [debouncedInputValue]);
-    useEffect(()=>{
-        searchUsers();
-    }, [accessFilter]);
+    }, [debouncedInputValue, accessFilter]);
+
     function accessFilterChange(e) {
         setAccessFilter(e.target.value);
     }
+
     function searchFilterChange(e) {
         setSearchFilter(e.target.value);
     }
+
     async function searchUsers(){
         const response = await getUserList(token, accessFilter, searchFilter);
         setUsersList(response.data);
@@ -78,12 +79,15 @@ function UserSetup() {
     function emailChange(e) {
         setEmail(e.target.value);
     }
+
     function nameChange(e) {
         setName(e.target.value);
     }
+
     function passwordChange(e) {
         setPassword(e.target.value);
     }
+
     function accessChange(e) {
         setAccess(e.target.value);
     }
@@ -99,10 +103,10 @@ function UserSetup() {
             redBorderMarker(nameRef.current);
         }
         if (mode === 'add') {
-        if (!password) {
-            flag = true;
-            redBorderMarker(passwordRef.current);
-        }
+            if (!password) {
+                flag = true;
+                redBorderMarker(passwordRef.current);
+            }
         }
         if (!access) {
             flag = true;

@@ -12,19 +12,26 @@ import { redBorderMarker } from '../../api/helper';
 
 function Landing() {
 
+    const navigate = useNavigate();
+    
+    // context states
     const {toast} = useContext(ToastContext);
     const {loading} = useContext(LoaderContext);
     const {access} = useContext(UserContext)
-    const navigate = useNavigate();
-    const [maskPassword, setMaskPassword] = useState(true);
+    
+    // data states
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+
+    // ui related states
+    const [maskPassword, setMaskPassword] = useState(true);
     
+    // dom references
     const usernameRef = useRef();
     const passwordRef = useRef();
 
     useEffect(()=>{
-        // go to designated page
+        // go to designated page based on user access
         switch(access){
             case 'user':
             case 'admin':
@@ -36,35 +43,42 @@ function Landing() {
         }
     }, [access])
 
+    // for google OAuth: will save a token at locan storage and refreshes this page
     async function onLoginSuccess(codeResponse){
         loading(true);
         const response = await login(jwtDecode(codeResponse.credential));
         loading(false);
         if(response.status){
             localStorage.setItem('t', response.token);
+            // this reload triggers checking on local storage token which will set an access context that will allow redirect to other pages
             location.reload();
         }else{
             toast(response.message, 'danger');
         }
     }
 
+    // for google OAuth failure
     function onLoginFailure(){
         toast('Unable to login with Google. Please try again later', 'warning');
     }
 
+    // login button
     async function loginClick(){
+        // check input
         if(username === '' || password === ''){
             redBorderMarker(usernameRef.current);
             redBorderMarker(passwordRef.current);
             return;
         }
         loading(true);
+        // access manual login
         const response = await manualLogin(username, password);
         loading(false);
         toast(response.message, response.status ? 'success' : 'danger');
         if(response.status){
             loading(true);
             localStorage.setItem('t', response.token);
+            // this reload triggers checking on local storage token which will set an access context that will allow redirect to other pages
             location.reload();
         }else{
             redBorderMarker(usernameRef.current);
@@ -88,9 +102,7 @@ function Landing() {
                         <div>
                             <input type={maskPassword ? 'password' : 'text'} value={password} onChange={(e)=>setPassword(e.target.value)} />
                             <button onMouseEnter={()=>setMaskPassword(false)} onMouseLeave={()=>setMaskPassword(true)} >
-                                {
-                                    maskPassword ? <FaLock /> : <FaLockOpen />
-                                }
+                                { maskPassword ? <FaLock /> : <FaLockOpen /> }
                             </button>
                         </div>
                     </div>

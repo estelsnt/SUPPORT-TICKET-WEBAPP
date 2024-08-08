@@ -11,7 +11,7 @@ export function SidebarProvider({children}){
             {
                 showSidebar, setShowsidebar
             }
-        }>
+        } >
             { children }
         </SidebarContext.Provider>
     );
