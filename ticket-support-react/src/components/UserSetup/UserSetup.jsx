@@ -4,7 +4,7 @@ import { BsSearch } from 'react-icons/bs';
 import { FaUser, FaLock } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import { redBorderMarker } from '../../api/helper';
-import { addNewUser, getUserList, editUser } from '../../api/userApi';
+import { addNewUser, getUserList, editUser, deleteUser } from '../../api/userApi';
 import { UserContext } from '../../context/UserContext';
 import { ToastContext } from '../../context/ToastContext';
 import { useTransition, animated } from '@react-spring/web';
@@ -21,7 +21,7 @@ function UserSetup() {
     // main data state
     const [usersList, setUsersList] = useState([]); // this goes to transition hook before rendering in UI
     const [headCount, setHeadCount] = useState(0);
-
+    
     // ui related states
     const [showModal, setShowModal] = useState(false);
     const [maskPassword, setMaskPassword] = useState(true);
@@ -31,25 +31,30 @@ function UserSetup() {
         keys: (item) => item.email, // Ensure each item has a unique key
     });
 
+    // message box state
+    const [showMessagebox, setShowMessagebox] = useState(false);
+    const [message, setMessage] = useState('');
+    const [messageboxCallback, setMessageboxCallback] = useState(()=>()=>{});
+
     // input states
     const [mode, setMode] = useState('add');
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [access, setAccess] = useState('client');
-
+    
     // modal input container reference
     const emailRef = useRef();
     const nameRef = useRef();
     const passwordRef = useRef();
     const accessRef = useRef();
-
+    
     // filter states
     const [accessFilter, setAccessFilter] = useState('client');
     const [searchFilter, setSearchFilter] = useState('');
     // for debounce searching
     const [debouncedInputValue, setDebouncedInputValue] = useState("");
-
+    
     useEffect(() => {
         const delayInputTimeoutId = setTimeout(() => {
             setDebouncedInputValue(searchFilter);
@@ -160,6 +165,36 @@ function UserSetup() {
         setAccess(user.access);
     }
 
+    function deleteClick(){
+        messagebox(true, 'Delete this user?', deleteThisUser);
+    }
+
+    async function deleteThisUser(){
+        loading(true);
+        const response = await deleteUser(token, email);
+        loading(false);
+        messagebox(false);
+        if(response.status){
+            messagebox(true, 'User deleted!', ()=>{
+                messagebox(false);
+                clearModalInput();
+                setShowModal(false);
+                searchUsers();
+            });
+        }else{
+            messagebox(true, 'Unable to delete user. Please try again later.', ()=>{
+                messagebox(false);
+            });
+        }
+    }
+
+
+    function messagebox(state, message = '', callback = ()=>()=>{}){
+        setShowMessagebox(state);
+        setMessage(message);
+        setMessageboxCallback(()=>callback);
+    }
+
     return (
         <>
         <Modal
@@ -169,54 +204,62 @@ function UserSetup() {
             <div className={styles.addUserModal}>
                 <div>
                     <div styles={styles.userInfo}>
-                    <div className="input-field">
-                        <label htmlFor="id">Email</label>
-                        <div ref={emailRef}>
-                        <input type="email" id="email" value={email} onChange={emailChange} readOnly={mode === 'edit' ? true : false} />
-                        <MdEmail />
+                        <div className="input-field">
+                            <label htmlFor="id">Email</label>
+                            <div ref={emailRef}>
+                            <input type="email" id="email" value={email} onChange={emailChange} readOnly={mode === 'edit' ? true : false} />
+                            <MdEmail />
+                            </div>
                         </div>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="name">Name</label>
-                        <div ref={nameRef}>
-                        <input type="text" id="name" value={name} onChange={nameChange} />
-                        <FaUser />
+                        <div className="input-field">
+                            <label htmlFor="name">Name</label>
+                            <div ref={nameRef}>
+                            <input type="text" id="name" value={name} onChange={nameChange} />
+                            <FaUser />
+                            </div>
                         </div>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="password">Password</label>
-                        <div ref={passwordRef}>
-                        <input
-                            type={maskPassword ? 'password' : 'text'}
-                            id="password"
-                            value={password}
-                            onChange={passwordChange}
-                            placeholder={mode === "add" ? '' : 'Change password'} />
-                        <button
-                            onMouseEnter={() => setMaskPassword(false)}
-                            onMouseLeave={() => setMaskPassword(true)} >
-                            <FaLock />
-                        </button>
+                        <div className="input-field">
+                            <label htmlFor="password">Password</label>
+                            <div ref={passwordRef}>
+                            <input
+                                type={maskPassword ? 'password' : 'text'}
+                                id="password"
+                                value={password}
+                                onChange={passwordChange}
+                                placeholder={mode === "add" ? '' : 'Change password'} />
+                            <button
+                                onMouseEnter={() => setMaskPassword(false)}
+                                onMouseLeave={() => setMaskPassword(true)} >
+                                <FaLock />
+                            </button>
+                            </div>
                         </div>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="access">Access</label>
-                        <div ref={accessRef}>
-                        <select id="access" onChange={accessChange} value={access} >
-                            <option value="client">Client</option>
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                        </select>
+                        <div className="input-field">
+                            <label htmlFor="access">Access</label>
+                            <div ref={accessRef}>
+                            <select id="access" onChange={accessChange} value={access} >
+                                <option value="client">Client</option>
+                                <option value="user">User</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                            </div>
                         </div>
-                    </div>
                     </div>
                 </div>
                 <div>
                     {
-                        mode === 'edit' ? <button className='btn-delete'>Delete</button> : <></>
+                        mode === 'edit' ? <button className='btn-delete' onClick={deleteClick}>Delete</button> : <></>
                     }
                     <button className='btn-success' onClick={saveClick}>Save</button>
                 </div>
+            </div>
+        </Modal>
+        <Modal open={showMessagebox} close={()=>messagebox(false)}>
+            <div className={styles.messageboxContent}>
+                <h6>{message}</h6>
+            </div>
+            <div className={styles.messageboxControls}>
+                <button className='btn-primary' onClick={messageboxCallback}>Confirm</button>
             </div>
         </Modal>
         <div className='section-header'>

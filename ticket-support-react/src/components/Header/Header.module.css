@@ -27,7 +27,7 @@
 .userinfo{
     width: 150px;
     position: absolute;
-    bottom: -60px;
+    bottom: -120px;
     right: 15px;
     border-radius: 5px;
     background-color: var(--support);

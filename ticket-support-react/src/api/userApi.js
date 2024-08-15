@@ -115,3 +115,20 @@ export async function editUser(token, email, name, password, access){
         console.error(error);
     }
 }
+
+export async function deleteUser(token, email){
+    try{    
+        const response = await fetch(`${API_ENDPONT}/users/disable`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': token
+            },
+            body: JSON.stringify({ email: email })
+        });
+        if(!response.ok) throw new Error('user disable api faild');
+        return await response.json();
+    }catch(error){
+        console.error(error);
+    }
+};

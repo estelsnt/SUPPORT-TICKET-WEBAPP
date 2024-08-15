@@ -100,3 +100,20 @@
 .userCard > div >span:nth-child(3){
     font-size: 0.6em;
 }
+.messageboxContent{
+    flex: 1;
+    border-bottom: 1px solid silver;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.messageboxContent h6{
+    font-size: 0.9em !important;
+    text-align: center;
+}
+.messageboxControls{
+    padding: 10px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
